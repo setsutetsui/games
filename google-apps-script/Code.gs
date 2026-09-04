@@ -1,20 +1,20 @@
 /**
- * Google Apps Script backend for Custom Connections Web Game
+ * Google Apps Script backend for Custom Categories Web Game
  * 
  * Setup Instructions:
- * 1. Create a new Google Sheet (e.g. named "Connections Game Backend").
+ * 1. Create a new Google Sheet (e.g. named "Categories Game Backend").
  * 2. In Google Sheets, click "Extensions" > "Apps Script".
  * 3. Replace any code in Code.gs with this entire file.
  * 4. Run `initSpreadsheet()` once in the Apps Script editor to create required sheets & headers.
  * 5. Click "Deploy" > "New deployment".
  * 6. Select type "Web app".
  * 7. Set:
- *    - Description: "Connections Game API"
+ *    - Description: "Categories Game API"
  *    - Execute as: "Me"
  *    - Who has access: "Anyone" (crucial so players can fetch games & save scores without signing in)
  * 8. Click "Deploy" and authorize the script permissions.
  * 9. Copy the "Web app URL" (looks like: https://script.google.com/macros/s/.../exec).
- * 10. Paste this URL into your app's Settings or .env file (VITE_GAS_API_URL).
+ * 10. Paste this URL into your app's Settings.
  */
 
 const SHEET_GAMES = 'Games';
@@ -189,7 +189,7 @@ function doPost(e) {
 
     if (action === 'createGame') {
       const gameId = (payload.id || '').trim().toLowerCase();
-      const title = (payload.title || 'Untitled Connections').trim();
+      const title = (payload.title || 'Untitled Puzzle').trim();
       const categories = payload.categories;
 
       if (!gameId || !/^[a-z0-9-_]+$/.test(gameId)) {

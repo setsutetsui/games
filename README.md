@@ -1,6 +1,6 @@
-# Custom Connections Game
+# Categories
 
-A lightweight, zero-dependency custom clone of the popular **NYT Connections** word puzzle game. 
+A lightweight, zero-dependency custom word categories puzzle game. 
 
 Make your own custom boards, give each puzzle an ID (e.g. `svenja.dev/c/mygame`), share with friends, and see their names and scores on the leaderboard — powered by **Google Sheets** via **Google Apps Script** as a free, serverless backend.
 
@@ -8,7 +8,7 @@ Make your own custom boards, give each puzzle an ID (e.g. `svenja.dev/c/mygame`)
 
 ## ✨ Features
 
-- **Classic Connections Gameplay**:
+- **Gameplay**:
   - 16 words shuffled on a responsive 4x4 grid
   - 4 mistakes allowed with visual dot indicators
   - Helpful **"One away..."** feedback when 3 of 4 words match

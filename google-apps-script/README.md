@@ -1,13 +1,13 @@
 # Google Sheets & Google Apps Script Backend Setup
 
-This custom Connections game uses a free Google Sheet connected to a Google Apps Script Web App as its database. No servers or paid backends are needed!
+This custom Categories game uses a free Google Sheet connected to a Google Apps Script Web App as its database. No servers or paid backends are needed!
 
 ---
 
 ## Step 1: Create a Google Sheet
 
 1. Go to [Google Sheets](https://sheets.new) and create a new spreadsheet.
-2. Name it something like **Connections Game DB**.
+2. Name it something like **Categories Game DB**.
 
 ---
 
@@ -15,7 +15,7 @@ This custom Connections game uses a free Google Sheet connected to a Google Apps
 
 1. In your Google Sheet, click on **Extensions** in the top menu.
 2. Select **Apps Script**. A new browser tab will open with the script editor.
-3. Rename the project (top left) from *Untitled project* to **Connections Game API**.
+3. Rename the project (top left) from *Untitled project* to **Categories Game API**.
 
 ---
 
@@ -36,7 +36,7 @@ This custom Connections game uses a free Google Sheet connected to a Google Apps
    - Click **Review permissions**.
    - Select your Google account.
    - Click **Advanced** (bottom left of the modal).
-   - Click **Go to Connections Game API (unsafe)**.
+   - Click **Go to Categories Game API (unsafe)**.
    - Click **Allow**.
 5. Once the execution finishes, switch back to your Google Sheet tab. You will see two sheets: **`Games`** and **`Results`** with their column headers automatically created!
 
@@ -47,7 +47,7 @@ This custom Connections game uses a free Google Sheet connected to a Google Apps
 1. In the Apps Script editor, click the blue **Deploy** button (top right) > **New deployment**.
 2. Click the gear icon next to "Select type" and choose **Web app**.
 3. Fill in the deployment configuration:
-   - **Description**: `Connections Game v1`
+   - **Description**: `Categories Game v1`
    - **Execute as**: `Me (your-email@gmail.com)`
    - **Who has access**: `Anyone` *(Crucial: This lets anyone playing your game load boards and submit their results without requiring a Google sign-in)*
 4. Click **Deploy**.
