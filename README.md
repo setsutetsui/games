@@ -24,7 +24,7 @@ If you want custom puzzles and scores to sync across different devices and frien
 
 1. Create a new spreadsheet at [sheets.new](https://sheets.new).
 2. In the top menu, click **Extensions** > **Apps Script**.
-3. Replace any code in the editor with the script in [`google-apps-script/Code.gs`](google-apps-script/Code.gs).
+3. Replace any code in the editor with the script in [`google-apps-script/Code.gs`](google-apps-script/Code.gs) (it includes `/** @OnlyCurrentDoc */` so it only ever has access to this one sheet).
 4. Run the `initSpreadsheet` function once from the toolbar to set up the `Games` and `Results` tabs.
 5. Click **Deploy** > **New deployment**, choose **Web app**, and set:
    - **Execute as:** Me

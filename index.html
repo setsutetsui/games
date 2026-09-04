@@ -297,7 +297,7 @@
               <span class="step-num">2</span>
               <div>
                 <strong>Open Apps Script Editor</strong>
-                <p>In your Google Sheet menu, click <strong>Extensions &gt; Apps Script</strong>.</p>
+                <p>In your Google Sheet menu, click <strong>Extensions &gt; Apps Script</strong>. <small class="text-muted">(Tip: If you see "Datei kann nicht geöffnet werden", open an Incognito window with only one Google account logged in.)</small></p>
               </div>
             </div>
 
@@ -305,7 +305,7 @@
               <span class="step-num">3</span>
               <div>
                 <strong>Paste Backend Code</strong>
-                <p>Delete any default boilerplate in <code>Code.gs</code> and paste the backend code:</p>
+                <p>Delete any default boilerplate in <code>Code.gs</code> and paste the backend code (includes <code>/** @OnlyCurrentDoc */</code> so it only ever accesses this single spreadsheet):</p>
                 <button type="button" id="btn-copy-gas-code" class="btn-sm mt-5">Copy Code.gs Script to Clipboard</button>
               </div>
             </div>
@@ -314,7 +314,7 @@
               <span class="step-num">4</span>
               <div>
                 <strong>Initialize Columns</strong>
-                <p>In the Apps Script toolbar function dropdown, select <strong><code>initSpreadsheet</code></strong> and click <strong>▷ Run</strong>. Grant permissions when prompted (<em>Advanced &gt; Go to Categories Game API (unsafe) &gt; Allow</em>). This creates the <code>Games</code> and <code>Results</code> sheets automatically!</p>
+                <p>In the Apps Script toolbar function dropdown, select <strong><code>initSpreadsheet</code></strong> and click <strong>▷ Run</strong>. Grant permissions when prompted (<em>Advanced &gt; Go to Categories Game API (unsafe) &gt; Allow</em>). You're only authorizing your own code to edit this one sheet. This creates the <code>Games</code> and <code>Results</code> sheets automatically!</p>
               </div>
             </div>
 

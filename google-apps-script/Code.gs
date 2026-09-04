@@ -1,3 +1,4 @@
+/** @OnlyCurrentDoc */
 /**
  * Google Apps Script backend for Custom Categories Web Game
  * 
