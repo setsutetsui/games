@@ -73,7 +73,8 @@
     btnShuffle: document.getElementById('btn-shuffle'),
     btnDeselect: document.getElementById('btn-deselect'),
     btnSubmit: document.getElementById('btn-submit'),
-    btnViewLeaderboard: document.getElementById('btn-view-leaderboard')
+    btnViewLeaderboard: document.getElementById('btn-view-leaderboard'),
+    btnBoardQr: document.getElementById('btn-board-qr')
   };
 
   const creator = {
@@ -86,6 +87,7 @@
     publishSuccess: document.getElementById('publish-success'),
     shareLinkInput: document.getElementById('share-link-input'),
     btnCopyShareLink: document.getElementById('btn-copy-share-link'),
+    publishQrcode: document.getElementById('publish-qrcode'),
     btnPlayPublished: document.getElementById('btn-play-published'),
     btnMakeAnother: document.getElementById('btn-make-another')
   };
@@ -94,7 +96,8 @@
     results: document.getElementById('modal-results'),
     leaderboard: document.getElementById('modal-leaderboard'),
     help: document.getElementById('modal-help'),
-    settings: document.getElementById('modal-settings')
+    settings: document.getElementById('modal-settings'),
+    qr: document.getElementById('modal-qr')
   };
 
   const results = {
@@ -105,6 +108,9 @@
     scoreForm: document.getElementById('score-form'),
     playerNameInput: document.getElementById('player-name'),
     btnShare: document.getElementById('btn-share-results'),
+    btnToggleQr: document.getElementById('btn-toggle-results-qr'),
+    qrWrap: document.getElementById('results-qr-wrap'),
+    qrcode: document.getElementById('results-qrcode'),
     btnOpenLeaderboard: document.getElementById('btn-open-leaderboard'),
     btnPlayAgain: document.getElementById('btn-play-again')
   };
@@ -530,8 +536,23 @@
     results.playerNameInput.value = savedName;
     results.scoreForm.classList.remove('hidden');
     results.scoreSavedMsg.classList.add('hidden');
+    if (results.qrWrap) results.qrWrap.classList.add('hidden');
+    if (results.btnToggleQr) results.btnToggleQr.textContent = 'Show QR Code';
 
     openModal(modals.results);
+  }
+
+  function renderQrCode(container, url, size = 160) {
+    if (!container || typeof QRCode === 'undefined') return;
+    container.innerHTML = '';
+    new QRCode(container, {
+      text: url,
+      width: size,
+      height: size,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
   }
 
   // ================= MODALS =================
@@ -612,6 +633,17 @@
       showToast('Failed to copy');
     }
   });
+
+  if (results.btnToggleQr) {
+    results.btnToggleQr.addEventListener('click', () => {
+      const isHidden = results.qrWrap.classList.toggle('hidden');
+      results.btnToggleQr.textContent = isHidden ? 'Show QR Code' : 'Hide QR Code';
+      if (!isHidden && currentGame) {
+        const url = currentGame.id !== 'demo' ? `https://svenja.dev/c/${currentGame.id}` : window.location.origin;
+        renderQrCode(results.qrcode, url, 150);
+      }
+    });
+  }
 
   results.btnOpenLeaderboard.addEventListener('click', () => {
     closeModal(modals.results);
@@ -761,6 +793,7 @@
 
       const url = `https://svenja.dev/c/${slug}`;
       creator.shareLinkInput.value = url;
+      renderQrCode(creator.publishQrcode, url, 160);
       creator.form.classList.add('hidden');
       creator.publishSuccess.classList.remove('hidden');
 
@@ -803,6 +836,43 @@
   header.btnNavCreate.addEventListener('click', () => {
     navigate('/create');
   });
+
+  function openQrModal() {
+    if (!currentGame) return;
+    const url = currentGame.id !== 'demo' ? `https://svenja.dev/c/${currentGame.id}` : window.location.origin;
+    const modalQrEl = document.getElementById('modal-qrcode');
+    const modalQrLink = document.getElementById('modal-qr-link');
+    const modalQrTitle = document.getElementById('qr-modal-title');
+    if (modalQrTitle) modalQrTitle.textContent = `Share #${currentGame.id}`;
+    if (modalQrLink) modalQrLink.value = url;
+    renderQrCode(modalQrEl, url, 180);
+    openModal(modals.qr);
+  }
+
+  if (header.puzzleIdTag) {
+    header.puzzleIdTag.style.cursor = 'pointer';
+    header.puzzleIdTag.title = 'Click to show QR code';
+    header.puzzleIdTag.addEventListener('click', openQrModal);
+  }
+
+  if (play.btnBoardQr) {
+    play.btnBoardQr.addEventListener('click', openQrModal);
+  }
+
+  const btnCopyModalQr = document.getElementById('btn-copy-modal-qr');
+  if (btnCopyModalQr) {
+    btnCopyModalQr.addEventListener('click', async () => {
+      const link = document.getElementById('modal-qr-link');
+      if (link && link.value) {
+        try {
+          await navigator.clipboard.writeText(link.value);
+          showToast('Copied puzzle link!');
+        } catch {
+          showToast('Failed to copy');
+        }
+      }
+    });
+  }
 
   header.btnNavHelp.addEventListener('click', () => {
     openModal(modals.help);

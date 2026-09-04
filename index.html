@@ -74,9 +74,11 @@
           <button id="btn-submit" class="btn-action btn-submit" disabled>Submit</button>
         </div>
 
-        <!-- Leaderboard button -->
+        <!-- Leaderboard & QR buttons -->
         <div class="board-footer">
           <button id="btn-view-leaderboard" class="link-btn">View Friend Scores</button>
+          <span class="footer-sep">·</span>
+          <button id="btn-board-qr" class="link-btn">QR Code</button>
         </div>
       </section>
 
@@ -169,6 +171,10 @@
             <input id="share-link-input" type="text" readonly />
             <button id="btn-copy-share-link" class="btn-sm">Copy</button>
           </div>
+          <div id="publish-qr-wrap" class="qr-wrap">
+            <div id="publish-qrcode" class="qr-code"></div>
+            <span class="qr-hint">Scan to play on phone</span>
+          </div>
           <div class="published-buttons">
             <button id="btn-play-published" class="btn-action btn-submit">Play it Now</button>
             <button id="btn-make-another" class="btn-action">Make Another</button>
@@ -207,6 +213,11 @@
 
           <div class="results-actions">
             <button id="btn-share-results" class="btn-action btn-submit full-width">Share Results</button>
+            <button id="btn-toggle-results-qr" class="btn-action full-width">Show QR Code</button>
+            <div id="results-qr-wrap" class="qr-wrap hidden">
+              <div id="results-qrcode" class="qr-code"></div>
+              <span class="qr-hint">Scan to play this puzzle</span>
+            </div>
             <button id="btn-open-leaderboard" class="btn-action full-width">View Leaderboard</button>
             <button id="btn-play-again" class="btn-action full-width">Play Again</button>
           </div>
@@ -341,9 +352,25 @@
             </div>
           </div>
         </div>
+    <!-- Share / QR Modal -->
+    <div id="modal-qr" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="qr-modal-title">Share Puzzle</h3>
+          <button class="close-btn" data-close="modal-qr">&times;</button>
+        </div>
+        <div class="modal-body qr-modal-body">
+          <div id="modal-qrcode" class="qr-code"></div>
+          <span class="qr-hint">Scan with phone camera</span>
+          <div class="share-box mt-10">
+            <input id="modal-qr-link" type="text" readonly />
+            <button id="btn-copy-modal-qr" class="btn-sm">Copy</button>
+          </div>
+        </div>
       </div>
     </div>
 
+    <script src="qrcode.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
