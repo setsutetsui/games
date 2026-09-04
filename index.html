@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Categories</title>
     <meta name="description" content="Custom word puzzle games." />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%2245%22 height=%2245%22 fill=%22%23ffd47d%22/><rect x=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2369bd2d%22/><rect y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2326c9ff%22/><rect x=%2255%22 y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%23e60cf3%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%2245%22 height=%2245%22 fill=%22%23FF5A24%22/><rect x=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2319F30C%22/><rect y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2326c9ff%22/><rect x=%2255%22 y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%23e60cf3%22/></svg>">
     
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -18,22 +18,26 @@
           <span id="current-puzzle-id" class="puzzle-id-tag hidden"></span>
         </div>
 
-        <nav class="header-right">
-          <button id="btn-nav-create" class="nav-link highlight">+ Make a Puzzle</button>
-          <button id="btn-nav-help" class="nav-icon-btn" title="How to play">?</button>
-          <button id="btn-nav-settings" class="nav-icon-btn" title="Google Sheets backend">⚙</button>
-        </nav>
-      </div>
+        <!-- Play By ID Bar (sits in between on desktop, second row on mobile) -->
+        <div id="quick-play-bar" class="quick-play-bar">
+          <form id="quick-play-form" class="quick-play-form">
+            <span class="url-prefix">svenja.dev/c/</span>
+            <input id="quick-play-input" type="text" placeholder="game-id" required autocomplete="off" />
+            <button type="submit" class="btn-sm">Play</button>
+          </form>
+        </div>
 
-      <!-- Play By ID Bar (Always Visible) -->
-      <div id="quick-play-bar" class="quick-play-bar">
-        <form id="quick-play-form" class="quick-play-form">
-          <span class="url-prefix">svenja.dev/c/</span>
-          <input id="quick-play-input" type="text" placeholder="game-id" required autocomplete="off" />
-          <button type="submit" class="btn-sm">Play</button>
-        </form>
+        <div class="header-right">
+          <button id="btn-nav-create" class="nav-link highlight">+ Make a Puzzle</button>
+        </div>
       </div>
     </header>
+
+    <!-- Bottom-Right Controls (? and settings) -->
+    <aside class="bottom-right-controls">
+      <button id="btn-nav-help" class="nav-icon-btn" title="How to play">?</button>
+      <button id="btn-nav-settings" class="nav-icon-btn" title="Google Sheets backend">⚙</button>
+    </aside>
 
     <!-- Notification Toast -->
     <div id="toast" class="toast hidden"></div>
@@ -252,14 +256,16 @@
 
     <!-- Settings (Google Sheets backend) Modal -->
     <div id="modal-settings" class="modal-overlay hidden">
-      <div class="modal">
+      <div class="modal settings-modal">
         <div class="modal-header">
-          <h3>Google Sheets Backend</h3>
+          <h3>Google Sheets Backend Setup</h3>
           <button class="close-btn" data-close="modal-settings">&times;</button>
         </div>
         <div class="modal-body">
-          <p><small>Connect a Google Sheet via Google Apps Script to save custom puzzles and friend scores across devices for free.</small></p>
-          
+          <p class="settings-intro">
+            Connect a free Google Sheet via Google Apps Script to save custom puzzles and sync friend scores across all devices.
+          </p>
+
           <div class="field-row mt-10">
             <label for="gas-url-input">Apps Script Web App URL</label>
             <input id="gas-url-input" type="url" placeholder="https://script.google.com/macros/s/.../exec" />
@@ -267,12 +273,72 @@
           </div>
 
           <div class="inline-input-row mt-10">
-            <button type="button" id="btn-test-gas" class="btn-action">Test</button>
+            <button type="button" id="btn-test-gas" class="btn-action">Test Connection</button>
             <span id="gas-test-result" class="test-result"></span>
           </div>
 
-          <div class="mt-15">
-            <button id="btn-save-settings" class="btn-action btn-submit full-width">Save</button>
+          <div class="mt-10">
+            <button id="btn-save-settings" class="btn-action btn-submit full-width">Save Settings</button>
+          </div>
+
+          <!-- Full Step-by-Step Instructions -->
+          <div class="instructions-section">
+            <h4>Step-by-Step Setup Guide</h4>
+            
+            <div class="step-item">
+              <span class="step-num">1</span>
+              <div>
+                <strong>Create a Google Sheet</strong>
+                <p>Go to <a href="https://sheets.new" target="_blank" rel="noopener">sheets.new</a> to create a new spreadsheet (e.g. named <code>Categories DB</code>).</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-num">2</span>
+              <div>
+                <strong>Open Apps Script Editor</strong>
+                <p>In your Google Sheet menu, click <strong>Extensions &gt; Apps Script</strong>.</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-num">3</span>
+              <div>
+                <strong>Paste Backend Code</strong>
+                <p>Delete any default boilerplate in <code>Code.gs</code> and paste the backend code:</p>
+                <button type="button" id="btn-copy-gas-code" class="btn-sm mt-5">Copy Code.gs Script to Clipboard</button>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-num">4</span>
+              <div>
+                <strong>Initialize Columns</strong>
+                <p>In the Apps Script toolbar function dropdown, select <strong><code>initSpreadsheet</code></strong> and click <strong>▷ Run</strong>. Grant permissions when prompted (<em>Advanced &gt; Go to Categories Game API (unsafe) &gt; Allow</em>). This creates the <code>Games</code> and <code>Results</code> sheets automatically!</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-num">5</span>
+              <div>
+                <strong>Deploy as Web App</strong>
+                <p>Click the blue <strong>Deploy &gt; New deployment</strong> button:</p>
+                <ul>
+                  <li>Select type: <strong>Web app</strong> (gear icon)</li>
+                  <li>Execute as: <strong>Me</strong></li>
+                  <li>Who has access: <strong>Anyone</strong> <small>(essential so friends can load boards and submit scores without signing in)</small></li>
+                </ul>
+                <p>Click <strong>Deploy</strong> and copy the <strong>Web app URL</strong> (ends in <code>/exec</code>).</p>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <span class="step-num">6</span>
+              <div>
+                <strong>Paste URL &amp; Save</strong>
+                <p>Paste your Web app URL into the input field above, click <strong>Test Connection</strong>, then click <strong>Save Settings</strong>!</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

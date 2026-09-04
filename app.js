@@ -58,14 +58,12 @@
   const header = {
     logo: document.getElementById('nav-logo'),
     puzzleIdTag: document.getElementById('current-puzzle-id'),
-    btnTogglePlayId: document.getElementById('btn-toggle-play-id'),
     btnNavCreate: document.getElementById('btn-nav-create'),
     btnNavHelp: document.getElementById('btn-nav-help'),
     btnNavSettings: document.getElementById('btn-nav-settings'),
     quickPlayBar: document.getElementById('quick-play-bar'),
     quickPlayForm: document.getElementById('quick-play-form'),
-    quickPlayInput: document.getElementById('quick-play-input'),
-    btnClosePlayBar: document.getElementById('btn-close-play-bar')
+    quickPlayInput: document.getElementById('quick-play-input')
   };
 
   const play = {
@@ -301,14 +299,14 @@
   function showPlayView(id) {
     views.play.classList.remove('hidden');
     views.create.classList.add('hidden');
-    header.btnTogglePlayId.classList.remove('hidden');
-    header.quickPlayBar.classList.add('hidden');
 
     if (id !== 'demo') {
       header.puzzleIdTag.textContent = `#${id}`;
       header.puzzleIdTag.classList.remove('hidden');
+      header.quickPlayInput.value = id;
     } else {
       header.puzzleIdTag.classList.add('hidden');
+      header.quickPlayInput.value = '';
     }
 
     loadPuzzle(id);
@@ -318,7 +316,6 @@
     views.play.classList.add('hidden');
     views.create.classList.remove('hidden');
     header.puzzleIdTag.classList.add('hidden');
-    header.quickPlayBar.classList.add('hidden');
     resetCreateForm();
   }
 
@@ -797,23 +794,10 @@
     openModal(modals.settings);
   });
 
-  header.btnTogglePlayId.addEventListener('click', () => {
-    header.quickPlayBar.classList.toggle('hidden');
-    if (!header.quickPlayBar.classList.contains('hidden')) {
-      header.quickPlayInput.focus();
-    }
-  });
-
-  header.btnClosePlayBar.addEventListener('click', () => {
-    header.quickPlayBar.classList.add('hidden');
-  });
-
   header.quickPlayForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const raw = header.quickPlayInput.value.trim().replace(/^https?:\/\/[^/]+\/c\//i, '').toLowerCase();
     if (raw) {
-      header.quickPlayBar.classList.add('hidden');
-      header.quickPlayInput.value = '';
       navigate(`/c/${raw}`);
     }
   });
@@ -863,6 +847,30 @@
       settings.btnTest.disabled = false;
     }
   });
+
+  const btnCopyGasCode = document.getElementById('btn-copy-gas-code');
+  if (btnCopyGasCode) {
+    btnCopyGasCode.addEventListener('click', async () => {
+      btnCopyGasCode.disabled = true;
+      btnCopyGasCode.textContent = 'Copying...';
+      try {
+        const res = await fetch('google-apps-script/Code.gs');
+        if (!res.ok) throw new Error();
+        const code = await res.text();
+        await navigator.clipboard.writeText(code);
+        showToast('Code.gs copied to clipboard!');
+        btnCopyGasCode.textContent = '✓ Copied!';
+      } catch {
+        showToast('See google-apps-script/Code.gs in repo');
+        btnCopyGasCode.textContent = 'Copy Code.gs Script to Clipboard';
+      } finally {
+        setTimeout(() => {
+          btnCopyGasCode.disabled = false;
+          btnCopyGasCode.textContent = 'Copy Code.gs Script to Clipboard';
+        }, 2200);
+      }
+    });
+  }
 
   // Start
   route();

@@ -3,8 +3,8 @@
 :root {
   --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   
-  --color-yellow: #ffd47d;
-  --color-green: #69bd2d;
+  --color-yellow: #FF5A24;
+  --color-green: #19F30C;
   --color-blue: #26c9ff;
   --color-purple: #e60cf3;
   
@@ -40,23 +40,25 @@ body {
 }
 
 .header-content {
-  max-width: 650px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 14px 16px;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .header-left {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .logo {
   font-family: var(--font-family);
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: #121212;
   text-decoration: none;
@@ -65,7 +67,7 @@ body {
 }
 
 .puzzle-id-tag {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #121212;
   background: #f0f0f0;
@@ -74,10 +76,41 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* Quick Play Bar: sits in the middle on desktop */
+.quick-play-bar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.quick-play-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.url-prefix {
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 700;
+}
+
+.quick-play-form input {
+  padding: 6px 8px;
+  border: 1px solid #121212;
+  font-size: 0.85rem;
+  font-family: inherit;
+  width: 140px;
+}
+
+.quick-play-form input:focus {
+  outline: 2px solid #121212;
+}
+
 .header-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-shrink: 0;
 }
 
 .nav-link {
@@ -87,7 +120,7 @@ body {
   font-weight: 700;
   color: #121212;
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 6px 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -106,53 +139,76 @@ body {
   background: #333333;
 }
 
-.nav-icon-btn {
-  background: none;
-  border: 1px solid #121212;
-  width: 28px;
-  height: 28px;
+/* Bottom-Right Controls (? and settings) on desktop & mobile */
+.bottom-right-controls {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  display: flex;
+  gap: 8px;
+  z-index: 500;
+}
+
+.bottom-right-controls .nav-icon-btn {
+  background: #ffffff;
+  border: 1.5px solid #121212;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
   color: #121212;
 }
 
-.nav-icon-btn:hover {
+.bottom-right-controls .nav-icon-btn:hover {
   background: #121212;
   color: #ffffff;
 }
 
-/* Quick Play Bar */
-.quick-play-bar {
-  background: #fafafa;
-  border-bottom: 2px solid #121212;
-  padding: 10px 16px;
-}
+/* Mobile responsive layout */
+@media (max-width: 650px) {
+  .header-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    gap: 10px 0;
+  }
 
-.quick-play-form {
-  max-width: 650px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  .header-left {
+    order: 1;
+  }
 
-.url-prefix {
-  font-size: 0.85rem;
-  color: #555;
-  font-weight: 700;
-}
+  /* Make a puzzle button anchors to the right on mobile */
+  .header-right {
+    order: 2;
+    margin-left: auto;
+  }
 
-.quick-play-form input {
-  padding: 6px 8px;
-  border: 1px solid #121212;
-  font-size: 0.85rem;
-  font-family: inherit;
-  flex: 1;
-  max-width: 200px;
+  /* Game ID thing sits beneath on mobile, exactly where it was */
+  .quick-play-bar {
+    order: 3;
+    width: 100%;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .quick-play-form {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .quick-play-form input {
+    max-width: 160px;
+    flex: 1;
+  }
 }
 
 /* Toast */
@@ -779,3 +835,80 @@ body {
 }
 .test-result.success { color: #1a7f37; }
 .test-result.error { color: #c00; }
+
+/* Settings modal instructions */
+.modal.settings-modal {
+  max-width: 520px;
+}
+
+.settings-intro {
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.4;
+}
+
+.instructions-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 2px solid #121212;
+}
+
+.instructions-section h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+
+.step-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.step-num {
+  width: 20px;
+  height: 20px;
+  background: #121212;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-item strong {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 2px;
+}
+
+.step-item p {
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.step-item ul {
+  margin-left: 18px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.step-item code {
+  background: #f1f1f1;
+  padding: 1px 4px;
+  border: 1px solid #ddd;
+  font-size: 0.9em;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
