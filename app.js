@@ -288,6 +288,8 @@
     const querySlug = urlParams.get('c');
     if (querySlug) {
       window.history.replaceState(null, '', `/c/${encodeURIComponent(querySlug.toLowerCase())}`);
+      showPlayView(querySlug.toLowerCase());
+      return;
     }
 
     const path = window.location.pathname;
