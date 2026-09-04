@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting — Connections</title>
+    <script>
+      // Single Page routing helper for GitHub Pages
+      // Redirects /c/<id> to /?c=<id> so index.html can load the game
+      var path = window.location.pathname;
+      var match = path.match(/^\/c\/([a-zA-Z0-9-_]+)/);
+      if (match && match[1]) {
+        window.location.replace('/?c=' + encodeURIComponent(match[1]));
+      } else if (path.includes('/create') || path.includes('/new')) {
+        window.location.replace('/?view=create');
+      } else {
+        window.location.replace('/');
+      }
+    </script>
+  </head>
+  <body>
+    <p style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+      Loading puzzle...
+    </p>
+  </body>
+</html>
