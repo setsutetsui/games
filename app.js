@@ -11,6 +11,9 @@
   const STORAGE_RESULTS_PREFIX = 'categories_results_';
   const STORAGE_PLAYER_NAME = 'categories_player_name';
 
+  // Default Google Apps Script backend for public games & scores
+  const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbwlKc6vcmgqfM4oDCAY_OKo6rTOQnKyNDbwgqqpVRl9244yBkN4Ei5XGG8u35Ck8bU/exec';
+
   const COLOR_EMOJIS = {
     yellow: '🟨',
     green: '🟩',
@@ -143,7 +146,7 @@
 
   // ================= STORAGE & BACKEND =================
   function getGasUrl() {
-    return (localStorage.getItem(STORAGE_GAS_URL) || '').trim();
+    return (localStorage.getItem(STORAGE_GAS_URL) || DEFAULT_GAS_URL || '').trim();
   }
 
   function setGasUrl(url) {
