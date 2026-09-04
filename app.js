@@ -360,7 +360,27 @@
   }
 
   function shuffleTiles() {
-    tiles.sort(() => Math.random() - 0.5);
+    let attempts = 0;
+    do {
+      for (let i = tiles.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = tiles[i];
+        tiles[i] = tiles[j];
+        tiles[j] = temp;
+      }
+      attempts++;
+    } while (attempts < 10 && hasFullCategoryInRow(tiles));
+  }
+
+  function hasFullCategoryInRow(arr) {
+    if (arr.length < 16) return false;
+    for (let r = 0; r < 4; r++) {
+      const row = arr.slice(r * 4, r * 4 + 4);
+      if (row.length === 4 && row.every((t) => t.categoryId === row[0].categoryId)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   function renderTiles() {
