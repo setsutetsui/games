@@ -850,8 +850,8 @@
     const modalQrTitle = document.getElementById('qr-modal-title');
     if (modalQrTitle) modalQrTitle.textContent = `Share #${currentGame.id}`;
     if (modalQrLink) modalQrLink.value = url;
-    renderQrCode(modalQrEl, url, 180);
     openModal(modals.qr);
+    renderQrCode(modalQrEl, url, 180);
   }
 
   if (header.puzzleIdTag) {
