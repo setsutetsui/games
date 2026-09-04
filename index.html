@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Categories</title>
     <meta name="description" content="Custom word puzzle games." />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%2245%22 height=%2245%22 rx=%224%22 fill=%22%23f9df6d%22/><rect x=%2255%22 width=%2245%22 height=%2245%22 rx=%224%22 fill=%22%23a0c35a%22/><rect y=%2255%22 width=%2245%22 height=%2245%22 rx=%224%22 fill=%22%23b0c4ef%22/><rect x=%2255%22 y=%2255%22 width=%2245%22 height=%2245%22 rx=%224%22 fill=%22%23ba81c5%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%2245%22 height=%2245%22 fill=%22%23ffd47d%22/><rect x=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2369bd2d%22/><rect y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%2326c9ff%22/><rect x=%2255%22 y=%2255%22 width=%2245%22 height=%2245%22 fill=%22%23e60cf3%22/></svg>">
     
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -19,20 +19,18 @@
         </div>
 
         <nav class="header-right">
-          <button id="btn-toggle-play-id" class="nav-link">Play ID</button>
           <button id="btn-nav-create" class="nav-link highlight">+ Make a Puzzle</button>
           <button id="btn-nav-help" class="nav-icon-btn" title="How to play">?</button>
           <button id="btn-nav-settings" class="nav-icon-btn" title="Google Sheets backend">⚙</button>
         </nav>
       </div>
 
-      <!-- Quick Play By ID Bar (toggled) -->
-      <div id="quick-play-bar" class="quick-play-bar hidden">
+      <!-- Play By ID Bar (Always Visible) -->
+      <div id="quick-play-bar" class="quick-play-bar">
         <form id="quick-play-form" class="quick-play-form">
           <span class="url-prefix">svenja.dev/c/</span>
           <input id="quick-play-input" type="text" placeholder="game-id" required autocomplete="off" />
           <button type="submit" class="btn-sm">Play</button>
-          <button type="button" id="btn-close-play-bar" class="btn-text">Cancel</button>
         </form>
       </div>
     </header>
